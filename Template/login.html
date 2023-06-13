@@ -1,0 +1,42 @@
+{% extends 'base.html' %}{% load static %}{% block content %}
+<main>
+  <section class="signup">
+    <h2>Login</h2>
+    <form method="post" class="">
+      {% csrf_token %} 
+      {% if form.errors %}
+      <div class="alert alert-danger">
+          {% for field in form %}
+          <!-- 필드 오류 -->
+          {% if field.errors %}
+          <div>
+              <strong>{{ field.label }}</strong>
+              {{ field.errors }}
+          </div>
+          {% endif %}
+          {% endfor %}
+          <!-- 넌필드 오류 -->
+          {% for error in form.non_field_errors %}
+          <div>
+              <strong>{{ error }}</strong>
+          </div>
+          {% endfor %}
+      </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">User Name</label>
+        {{ form.username }}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">Password</label>
+        {{ form.password }}
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+  </section>
+  <p>
+    계정을 가지고 있지 않습니까?
+    <a href="{% url 'register' %}">Register</a>
+  </p>
+</main>
+{% endblock %}
